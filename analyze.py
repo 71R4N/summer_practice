@@ -133,3 +133,18 @@ fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
 fig.update_layout(
     title_text="Analysis on Survival - HBP(high blood pressure)")
 fig.show()
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+from sklearn.neighbors import KNeighborsClassifier
+Features = ['time','serum_creatinine','anaemia','high_blood_pressure']
+x = df[Features]
+y = df["DEATH_EVENT"]
+x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.2, random_state=2)
+accuracy_list = []
+kn_clf = KNeighborsClassifier(n_neighbors=6)
+kn_clf.fit(x_train, y_train)
+kn_pred = kn_clf.predict(x_test)
+kn_acc = accuracy_score(y_test, kn_pred)
+accuracy_list.append(100*kn_acc)
+print("Accuracy of K Neighbors Classifier is : ", "{:.2f}%".format(100* kn_acc))
