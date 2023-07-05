@@ -27,3 +27,32 @@ fig = px.box(df, x='sex', y='age', points="all")
 fig.update_layout(
     title_text="Gender wise Age Spread - Male = 1 Female =0")
 fig.show()
+
+male = df[df["sex"]==1]
+female = df[df["sex"]==0]
+
+male_survi = male[df["DEATH_EVENT"]==0]
+male_not = male[df["DEATH_EVENT"]==1]
+female_survi = female[df["DEATH_EVENT"]==0]
+female_not = female[df["DEATH_EVENT"]==1]
+
+labels = ['Male - Survived','Male - Not Survived', "Female -  Survived", "Female - Not Survived"]
+values = [len(male[df["DEATH_EVENT"]==0]),len(male[df["DEATH_EVENT"]==1]),
+         len(female[df["DEATH_EVENT"]==0]),len(female[df["DEATH_EVENT"]==1])]
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+fig.update_layout(
+    title_text="Analysis on Survival - Gender")
+fig.show()
+
+surv = df[df["DEATH_EVENT"]==0]["age"]
+not_surv = df[df["DEATH_EVENT"]==1]["age"]
+hist_data = [surv,not_surv]
+group_labels = ['Survived', 'Not Survived']
+fig = ff.create_distplot(hist_data, group_labels, bin_size=0.5)
+fig.update_layout(
+    title_text="Analysis in Age on Survival Status")
+fig.show()
+
+fig = px.violin(df, y="age", x="sex", color="DEATH_EVENT", box=True, points="all", hover_data=df.columns)
+fig.update_layout(title_text="Analysis in Age and Gender on Survival Status")
+fig.show()
