@@ -70,3 +70,22 @@ fig.show()
 
 fig = px.histogram(df, x="platelets", color="DEATH_EVENT", marginal="violin", hover_data=df.columns)
 fig.show()
+
+surv = df[df['DEATH_EVENT']==0]['serum_creatinine']
+not_surv = df[df['DEATH_EVENT']==1]['serum_creatinine']
+hist_data = [surv,not_surv]
+group_labels = ['Survived', 'Not Survived']
+fig = ff.create_distplot(hist_data, group_labels, bin_size=0.5)
+fig.update_layout(
+    title_text="Analysis in Serum Creatinine on Survival Status")
+fig.show()
+
+surv = df[df['DEATH_EVENT']==0]['serum_sodium']
+not_surv = df[df['DEATH_EVENT']==1]['serum_sodium']
+hist_data = [surv,not_surv]
+group_labels = ['Survived', 'Not Survived']
+fig = ff.create_distplot(hist_data, group_labels, bin_size=0.5)
+fig.update_layout(
+    title_text="Analysis in Serum Sodium on Survival Status")
+fig.show()
+
