@@ -89,3 +89,47 @@ fig.update_layout(
     title_text="Analysis in Serum Sodium on Survival Status")
 fig.show()
 
+anaemia_yes = df[df['anaemia']==1]
+anaemia_no = df[df['anaemia']==0]
+labels = ['No Anaemia', 'Anaemia']
+values = [len(anaemia_no), len(anaemia_yes)]
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+fig.update_layout(
+    title_text="Analysis on - Anaemia")
+fig.show()
+
+anaemia_yes_survi = anaemia_yes[df["DEATH_EVENT"]==0]
+anaemia_yes_not_survi = anaemia_yes[df["DEATH_EVENT"]==1]
+anaemia_no_survi = anaemia_no[df["DEATH_EVENT"]==0]
+anaemia_no_not_survi = anaemia_no[df["DEATH_EVENT"]==1]
+labels = ['Anaemia Yes - Survived','Anaemia Yes - Not Survived', 'Anaemia No - Survived', 'Anaemia NO - Not Survived']
+values = [len(anaemia_yes[df["DEATH_EVENT"]==0]),len(anaemia_yes[df["DEATH_EVENT"]==1]),
+         len(anaemia_no[df["DEATH_EVENT"]==0]),len(anaemia_no[df["DEATH_EVENT"]==1])]
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+fig.update_layout(
+    title_text="Analysis on Survival - Anaemia")
+fig.show()
+
+hbp_yes = df[df['high_blood_pressure']==1]
+hbp_no = df[df['high_blood_pressure']==0]
+
+labels = ["No High BP","High BP"]
+values = [len(hbp_no), len(hbp_yes)]
+
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+fig.update_layout(
+    title_text="Analysis on - High Blood Pressure")
+fig.show()
+
+hbp_yes_survi = hbp_yes[df["DEATH_EVENT"]==0]
+hbp_yes_not_survi = hbp_yes[df["DEATH_EVENT"]==1]
+hbp_no_survi = hbp_no[df["DEATH_EVENT"]==0]
+hbp_no_not_survi = hbp_no[df["DEATH_EVENT"]==1]
+
+labels = ['HBP Yes - Survived','HBP Yes - Not Survived', 'HBP No - Survived', 'HBP NO - Not Survived']
+values = [len(hbp_yes[df["DEATH_EVENT"]==0]),len(hbp_yes[df["DEATH_EVENT"]==1]),
+         len(hbp_no[df["DEATH_EVENT"]==0]),len(hbp_no[df["DEATH_EVENT"]==1])]
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+fig.update_layout(
+    title_text="Analysis on Survival - HBP(high blood pressure)")
+fig.show()
