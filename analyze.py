@@ -148,3 +148,33 @@ kn_pred = kn_clf.predict(x_test)
 kn_acc = accuracy_score(y_test, kn_pred)
 accuracy_list.append(100*kn_acc)
 print("Accuracy of K Neighbors Classifier is : ", "{:.2f}%".format(100* kn_acc))
+
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout
+import tensorflow as tf
+from sklearn import preprocessing
+
+X=df.drop(["DEATH_EVENT"],axis=1)
+y=df["DEATH_EVENT"]
+
+col_names = list(X.columns)
+s_scaler = preprocessing.StandardScaler()
+X_scaled= s_scaler.fit_transform(X)
+X_scaled = pd.DataFrame(X_scaled, columns=col_names)
+X_train, X_test, y_train,y_test = train_test_split(X_scaled,y,test_size=0.30,random_state=25)
+model = Sequential()
+model.add(Dense(units = 16, kernel_initializer = 'uniform', activation = 'relu', input_dim = 12))
+model.add(Dense(units = 8, kernel_initializer = 'uniform', activation = 'relu'))
+model.add(Dropout(0.25))
+model.add(Dense(units = 8, kernel_initializer = 'uniform', activation = 'relu'))
+model.add(Dropout(0.5))
+model.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+# Compiling the ANN
+model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+# Train the ANN
+history = model.fit(X_train, y_train, batch_size = 25, epochs = 80,verbose=10, validation_split=0.25)
+
+val_accuracy = np.mean(history.history['val_accuracy'])
+print("\n%s: %.2f%%" % ('val_accuracy is', val_accuracy*100))
