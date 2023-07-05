@@ -56,3 +56,17 @@ fig.show()
 fig = px.violin(df, y="age", x="sex", color="DEATH_EVENT", box=True, points="all", hover_data=df.columns)
 fig.update_layout(title_text="Analysis in Age and Gender on Survival Status")
 fig.show()
+
+fig = px.violin(df, y="age", x="smoking", color="DEATH_EVENT", box=True, points="all", hover_data=df.columns)
+fig.update_layout(title_text="Analysis in Age and Smoking on Survival Status")
+fig.show()
+
+fig = px.violin(df, y="age", x="diabetes", color="DEATH_EVENT", box=True, points="all", hover_data=df.columns)
+fig.update_layout(title_text="Analysis in Age and Diabetes on Survival Status")
+fig.show()
+
+fig = px.histogram(df, x="creatinine_phosphokinase", color="DEATH_EVENT", marginal="violin", hover_data=df.columns)
+fig.show()
+
+fig = px.histogram(df, x="platelets", color="DEATH_EVENT", marginal="violin", hover_data=df.columns)
+fig.show()
